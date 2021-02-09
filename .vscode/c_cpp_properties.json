@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "TheHeroEditor Editor Linux Development (TheHero)",
+            "intelliSenseMode": "clang-x64",
+            "compileCommands": "/home/mpulcinelli/Develop/personal/games/TheHero/.vscode/compileCommands_TheHero.json",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "includePath": [
+                "${workspaceFolder:TheHero}/Intermediate/**",
+                "${workspaceFolder:TheHero}/Source/**",
+                "${workspaceFolder:TheHero}/Source/TheHero/**",
+                "${workspaceFolder:UE4}/**",
+                "${workspaceFolder:UE4}/Engine/Source/**",
+                "${workspaceFolder:UE4}/Engine/Intermediate/**"
+            ]
+        }
+    ],
+    "version": 4
+}

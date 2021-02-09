@@ -1,0 +1,120 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "TheHero (Debug)",
+			"request": "launch",
+			"preLaunchTask": "TheHero Linux Debug Build",
+			"program": "/home/mpulcinelli/Develop/personal/games/TheHero/Binaries/Linux/TheHero-Linux-Debug",
+			"args": [],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"type": "lldb"
+		},
+		{
+			"name": "TheHero (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "TheHero Linux DebugGame Build",
+			"program": "/home/mpulcinelli/Develop/personal/games/TheHero/Binaries/Linux/TheHero-Linux-DebugGame",
+			"args": [],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"type": "lldb"
+		},
+		{
+			"name": "TheHero (Development)",
+			"request": "launch",
+			"preLaunchTask": "TheHero Linux Development Build",
+			"program": "/home/mpulcinelli/Develop/personal/games/TheHero/Binaries/Linux/TheHero",
+			"args": [],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"type": "lldb"
+		},
+		{
+			"name": "TheHero (Shipping)",
+			"request": "launch",
+			"preLaunchTask": "TheHero Linux Shipping Build",
+			"program": "/home/mpulcinelli/Develop/personal/games/TheHero/Binaries/Linux/TheHero-Linux-Shipping",
+			"args": [],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"type": "lldb"
+		},
+		{
+			"name": "TheHero (Test)",
+			"request": "launch",
+			"preLaunchTask": "TheHero Linux Test Build",
+			"program": "/home/mpulcinelli/Develop/personal/games/TheHero/Binaries/Linux/TheHero-Linux-Test",
+			"args": [],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"type": "lldb"
+		},
+		{
+			"name": "TheHeroEditor (Debug)",
+			"request": "launch",
+			"preLaunchTask": "TheHeroEditor Linux Debug Build",
+			"program": "/opt/UE4/UnrealEngine/Engine/Binaries/Linux/UE4Editor-Linux-Debug",
+			"args": [
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject"
+			],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"type": "lldb"
+		},
+		{
+			"name": "TheHeroEditor (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "TheHeroEditor Linux DebugGame Build",
+			"program": "/opt/UE4/UnrealEngine/Engine/Binaries/Linux/UE4Editor-Linux-DebugGame",
+			"args": [
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject"
+			],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"type": "lldb"
+		},
+		{
+			"name": "TheHeroEditor (Development - GDB)",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "/opt/UE4/UnrealEngine/Engine/Binaries/Linux/UE4Editor",
+			"args": [
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject"
+			],
+			"stopAtEntry": false,
+			"cwd": "/opt/UE4/UnrealEngine",
+			"environment": [],
+			"externalConsole": false,
+			"preLaunchTask": "TheHeroEditor Linux Development Build",
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		},
+		{
+			"name": "TheHeroEditor (Development - LLDB)",
+			"type": "lldb",
+			"request": "launch",
+			"program": "/opt/UE4/UnrealEngine/Engine/Binaries/Linux/UE4Editor",
+			"args": [
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject"
+			],
+			"cwd": "/opt/UE4/UnrealEngine",
+			"preLaunchTask": "TheHeroEditor Linux Development Build",
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "mono",
+			"request": "launch",
+			"program": "/opt/UE4/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe",
+			"console": "internalConsole",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=\"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject\"",
+				"-game",
+				"-engine"
+			],
+			"internalConsoleOptions": "openOnSessionStart",
+			"cwd": "/opt/UE4/UnrealEngine"
+		}
+	]
+}

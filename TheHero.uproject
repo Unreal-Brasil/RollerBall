@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{0004D43F-08D8-C6DA-0770-35D0776A0703}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "TheHero",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}

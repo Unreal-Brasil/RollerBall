@@ -1,0 +1,1710 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "TheHero Mac Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Mac Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Mac DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Mac Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Shipping Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Shipping Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Mac Shipping Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Shipping Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Test Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Test Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Mac Test Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Mac Test Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Mac",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero IOS Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero IOS DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero IOS Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Shipping Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Shipping Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero IOS Shipping Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Shipping Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Test Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Test Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero IOS Test Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero IOS Test Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"IOS",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Linux Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Linux DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Linux Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Shipping Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Shipping Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Linux Shipping Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Shipping Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Test Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Test Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero Linux Test Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero Linux Test Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"Linux",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero LinuxAArch64 Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero LinuxAArch64 DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero LinuxAArch64 Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Shipping Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Shipping Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero LinuxAArch64 Shipping Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Shipping Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Test Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Test Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero LinuxAArch64 Test Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero LinuxAArch64 Test Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"LinuxAArch64",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero TVOS Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero TVOS DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero TVOS Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Shipping Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Shipping Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero TVOS Shipping Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Shipping Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Shipping",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Test Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Test Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHero TVOS Test Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHero TVOS Test Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHero",
+				"TVOS",
+				"Test",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHeroEditor Linux Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHeroEditor Linux DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHeroEditor Linux Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Linux Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Linux",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHeroEditor Mac Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"Debug",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHeroEditor Mac DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"DebugGame",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"TheHeroEditor Mac Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		},
+		{
+			"label": "TheHeroEditor Mac Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+			"args": [
+				"TheHeroEditor",
+				"Mac",
+				"Development",
+				"/home/mpulcinelli/Develop/personal/games/TheHero/TheHero.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/opt/UE4/UnrealEngine"
+			}
+		}
+	]
+}
