@@ -49,9 +49,15 @@ ATP_RollingBall::ATP_RollingBall()
 	bCanJump = true; // Start being able to jump
 }
 
+/**
+ * 
+ * Cria o particle effect quando o player passa pelos buracos.
+ * 
+*/
 void ATP_RollingBall::ExecuteEmitterPassRole()
 {
-	if (Ball != nullptr) {
+	if (Ball != nullptr)
+	{
 		auto ball_loc = Ball->GetComponentLocation();
 		FString particleEffectPath = "/Game/Particles/PS_PassRole";
 		auto ps = Cast<UParticleSystem>(StaticLoadObject(UParticleSystem::StaticClass(), NULL, *particleEffectPath));
@@ -59,8 +65,12 @@ void ATP_RollingBall::ExecuteEmitterPassRole()
 	}
 }
 
-
-void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+/**
+ * 
+ * Ajusta o input do player.
+ * 
+*/
+void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
 {
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATP_RollingBall::MoveRight);
@@ -73,18 +83,31 @@ void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* PlayerInp
 	PlayerInputComponent->BindTouch(IE_Released, this, &ATP_RollingBall::TouchStopped);
 }
 
+/**
+ * 
+ * Move o player para direita ou para a esquerda.
+ * 
+*/
 void ATP_RollingBall::MoveRight(float Val)
 {
 	const FVector Torque = FVector(-1.f * Val * RollTorque, 0.f, 0.f);
 	Ball->AddTorqueInRadians(Torque);
 }
 
+/**
+ * 
+ * Move o player para frente e para trás.
+ * 
+*/
 void ATP_RollingBall::MoveForward(float Val)
 {
 	const FVector Torque = FVector(0.f, Val * RollTorque, 0.f);
 	Ball->AddTorqueInRadians(Torque);
 }
 
+/**
+ * Faz o pulo da bola.
+*/
 void ATP_RollingBall::Jump()
 {
 	if (bCanJump)
@@ -95,13 +118,23 @@ void ATP_RollingBall::Jump()
 	}
 }
 
-void ATP_RollingBall::NotifyHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
+/**
+ * 
+ * Notifica o Pulo.
+ * 
+*/
+void ATP_RollingBall::NotifyHit(class UPrimitiveComponent *MyComp, class AActor *Other, class UPrimitiveComponent *OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult &Hit)
 {
 	Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
 
 	bCanJump = true;
 }
 
+/**
+ * 
+ * Usuário toca na tela do device.
+ * 
+*/
 void ATP_RollingBall::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	if (bCanJump)
@@ -110,7 +143,6 @@ void ATP_RollingBall::TouchStarted(ETouchIndex::Type FingerIndex, FVector Locati
 		Ball->AddImpulse(Impulse);
 		bCanJump = false;
 	}
-
 }
 
 void ATP_RollingBall::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)

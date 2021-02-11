@@ -7,7 +7,10 @@
 #include "Components/BoxComponent.h"
 #include "Components/AudioComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "TheHeroInstance.h"
+#include "MinaExplosiva.h"
+#include "Components/ChildActorComponent.h"
 #include "TP_Rolling/TP_RollingBall.h"
 
 // Sets default values
@@ -19,7 +22,7 @@ APassarelaCreator::APassarelaCreator()
 	AlturaPlataforma = -550.0f;
 	PointToDelivery = 5;
 
-	USceneComponent* RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
+	USceneComponent *RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 	ArrowTOP = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowTOP"));
 	ArrowDOWN = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowDOWN"));
 	BoxDeath = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxDeath"));
@@ -56,7 +59,6 @@ APassarelaCreator::APassarelaCreator()
 	{
 		Audio->SetSound(SOUND_PASS_ROLE.Object);
 	}
-
 	if (SM_PASS_00_A.Object != nullptr)
 	{
 		Passarelas.Add(SM_PASS_00_A.Object);
@@ -111,14 +113,15 @@ void APassarelaCreator::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < 10; i++)
 	{
 		CriarPlatform();
 	}
 
 	BoxDeath->OnComponentBeginOverlap.AddDynamic(this, &APassarelaCreator::BoxDeathOverlapBegin);
-	GetWorld()->GetTimerManager().SetTimer(LoadPlatformTimerHandle, this, &APassarelaCreator::CriarPlatform, 3, true);
+	//GetWorld()->GetTimerManager().SetTimer(LoadPlatformTimerHandle, this, &APassarelaCreator::CriarPlatform, 3, true);
 	GetWorld()->GetTimerManager().SetTimer(DestroyPlatformTimerHandle, this, &APassarelaCreator::DestruirPlatform, 3, true);
+	GetWorld()->GetTimerManager().SetTimer(DestroyMinasTimerHandle, this, &APassarelaCreator::DestruirMinasNaoUsadas, 3, true);
 }
 
 void APassarelaCreator::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -128,6 +131,9 @@ void APassarelaCreator::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
 }
 
+/**
+ * Este método é bom. Ele cria plataformas.
+*/
 void APassarelaCreator::CriarPlatform()
 {
 	Counter++;
@@ -135,17 +141,20 @@ void APassarelaCreator::CriarPlatform()
 	FVector VecMeshLoc;
 	VecMeshLoc.Z = AlturaPlataforma * Counter;
 
-	UStaticMeshComponent* SMComp = NewObject<UStaticMeshComponent>(this);
+	UStaticMeshComponent *SMComp = NewObject<UStaticMeshComponent>(this);
 	SMComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	SMComp->SetRelativeLocation(VecMeshLoc);
 	SMComp->SetRelativeScale3D(FVector(3.0f, 1.0f, 1.0f));
-	SMComp->SetStaticMesh(Passarelas[FMath::RandRange(1, Passarelas.Num() - 1)]);
+
+	auto SmToAdd = Passarelas[FMath::RandRange(1, Passarelas.Num() - 1)];
+
+	SMComp->SetStaticMesh(SmToAdd);
 	SMComp->RegisterComponent();
 
 	ArrowDOWN->SetRelativeLocation(VecMeshLoc);
 	BoxDeath->SetRelativeLocation(VecMeshLoc);
 
-	UBoxComponent* BoxCompPassRole = NewObject<UBoxComponent>(this);
+	UBoxComponent *BoxCompPassRole = NewObject<UBoxComponent>(this);
 	BoxCompPassRole->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	BoxCompPassRole->SetRelativeLocation(VecMeshLoc);
 	BoxCompPassRole->SetGenerateOverlapEvents(true);
@@ -154,15 +163,19 @@ void APassarelaCreator::CriarPlatform()
 	BoxCompPassRole->OnComponentBeginOverlap.AddDynamic(this, &APassarelaCreator::BoxPassRoleOverlapBegin);
 	BoxCompPassRole->RegisterComponent();
 
+	CriarMina(VecMeshLoc);
 }
 
+/**
+ * Belo método para destruir as plataformas que estão acima do player.
+*/
 void APassarelaCreator::DestruirPlatform()
 {
-	TArray<UStaticMeshComponent*> outComp;
+	TArray<UStaticMeshComponent *> outComp;
 	GetComponents<UStaticMeshComponent>(outComp);
 
 	auto MyPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	for (auto&& i : outComp)
+	for (auto &&i : outComp)
 	{
 		FVector mesh_comp_loc = i->GetComponentLocation();
 		FVector pawn_loc = MyPawn->GetActorLocation();
@@ -174,22 +187,59 @@ void APassarelaCreator::DestruirPlatform()
 	}
 }
 
-// Called every frame
+void APassarelaCreator::DestruirMinasNaoUsadas()
+{
+	TArray<UChildActorComponent *> outComp;
+	GetComponents<UChildActorComponent>(outComp);
+
+	auto MyPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	for (auto &&i : outComp)
+	{
+		FVector mesh_comp_loc = i->GetComponentLocation();
+		FVector pawn_loc = MyPawn->GetActorLocation();
+
+		if (mesh_comp_loc.Z > pawn_loc.Z)
+		{
+			i->DestroyComponent();
+		}
+	}
+}
+
+void APassarelaCreator::CriarMina(FVector loc)
+{
+
+	int32 NumMinas = FMath::RandRange(0, 3);
+
+	for (int32 i = 0; i < NumMinas; i++)
+	{
+		UChildActorComponent *MinaToSpawn = NewObject<UChildActorComponent>(this);
+		MinaToSpawn->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+		FVector InnerPosition(FMath::RandRange(-100, 100), FMath::RandRange(-1350, 1350), loc.Z + 100);
+		MinaToSpawn->SetRelativeLocation(InnerPosition);
+		MinaToSpawn->SetChildActorClass(AMinaExplosiva::StaticClass());
+		MinaToSpawn->RegisterComponent();
+	}
+}
+
+/**
+ * Método maroto chamado a cada frame.
+*/
 void APassarelaCreator::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
-void APassarelaCreator::BoxDeathOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void APassarelaCreator::BoxDeathOverlapBegin(class UPrimitiveComponent *OverlappedComp, class AActor *Other, class UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	auto Player = Cast<ATP_RollingBall>(Other);
 	if (Player != nullptr)
 	{
-		OnPlayerDied.Broadcast();
+		OnPlayerDiedNow.Broadcast();
+		UE_LOG(LogTemp, Warning, TEXT("BoxDeathOverlapBegin"));
 	}
 }
 
-void APassarelaCreator::BoxPassRoleOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void APassarelaCreator::BoxPassRoleOverlapBegin(class UPrimitiveComponent *OverlappedComp, class AActor *Other, class UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	auto Player = Cast<ATP_RollingBall>(Other);
 	if (Player != nullptr)
@@ -206,6 +256,7 @@ void APassarelaCreator::BoxPassRoleOverlapBegin(class UPrimitiveComponent* Overl
 				GameInst->UpdatePlayerScore(PointToDelivery);
 				Player->ExecuteEmitterPassRole();
 				Audio->Play();
+				CriarPlatform();
 			}
 		}
 	}

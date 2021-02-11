@@ -11,24 +11,22 @@ class ATP_RollingGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
-		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDied);
-
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDied);
 
 public:
 	ATP_RollingGameMode();
 
 	UPROPERTY(BlueprintAssignable)
-		FPlayerDied OnPlayerDied;
-
+	FPlayerDied OnPlayerDied;
 
 private:
-	class UTheHeroInstance* CurrentGameInstance;
+	class UTheHeroInstance *CurrentGameInstance;
 	bool IsClosed;
-protected:
 
+	UFUNCTION()
+	void OnPlayerDiedNow();
+
+protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 };
-
-
-
