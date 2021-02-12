@@ -1,7 +1,9 @@
 import { type } from "os";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
+@Unique("UNI-User", ["userName"])
+@Unique("UNI-Email", ["email"])
 export class User {
   @PrimaryGeneratedColumn()
   Id: Number;
@@ -15,10 +17,10 @@ export class User {
   @Column({ length: 250 })
   email: string;
 
-  @Column({ nullable: true, type: "date" })
+  @Column({ nullable: true, type: "datetime" })
   ultimoLogin: Date;
 
-  @Column({ nullable: true, type: "date" })
+  @Column({ nullable: true, type: "datetime" })
   dataCadastro: Date;
 
   @Column()

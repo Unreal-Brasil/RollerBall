@@ -7,6 +7,10 @@ export function ajustNumber(params: string) {
   return itm;
 }
 
+export function getTokenKey() {
+  return "TOKEN-00000001";
+}
+
 export function ajustDate(params: string): Date {
   if (params === "00/00/0000") {
     return null;

@@ -15,18 +15,28 @@ UCLASS()
 class THEHERO_API UTheHeroInstance : public UGameInstance
 {
 	GENERATED_BODY()
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FLoginResultSuccessSignature, int, Id, FString, Login, FString, SuccessMessage);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FLoginResultSuccessSignature, int, Id, FString, Login,  FString, Token, FString, SuccessMessage);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FLoginResultErrorSignature, FString, ErrorMessage);
+	// -----------------------------------------------------------
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FCadastroResultSuccessSignature, int, Id, FString, Login, FString, SuccessMessage);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCadastroResultErrorSignature, FString, ErrorMessage);
 
 private:
 	FHttpModule *Http;
 
 	void OnLoginResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-
+	void OnCadastroResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	FString Mensagem;
+	FString Token;
 
 public:
 	UTheHeroInstance();
+
+	UPROPERTY(BlueprintAssignable)
+	FCadastroResultSuccessSignature OnCadastroReultSuccess;
+
+	UPROPERTY(BlueprintAssignable)
+	FCadastroResultErrorSignature OnCadastroReultError;
 
 	UPROPERTY(BlueprintAssignable)
 	FLoginResultSuccessSignature OnLoginResultSuccess;
@@ -45,11 +55,13 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "PlayerLogin")
 	FString PlayerLogin;
-	
+
 	/////////////////////////////////////////////////////////////////////
 	UFUNCTION(BlueprintCallable)
 	void DoLogin(FString UserName, FString Password);
 	/////////////////////////////////////////////////////////////////////
+	UFUNCTION(BlueprintCallable)
+	void DoCadastro(FString UserName, FString Password, FString Email);
 
 	UFUNCTION(BlueprintCallable)
 	void ResetPlayerValues(int valor);

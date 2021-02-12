@@ -22,6 +22,7 @@ protected:
 private:
 	class UStaticMeshComponent *MineMeshComponent;
 	class URadialForceComponent *ForcaExplosaoComponent;
+	class UAudioComponent *Audio;
 
 	bool bExploded;
 
