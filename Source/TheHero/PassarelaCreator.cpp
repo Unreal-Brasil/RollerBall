@@ -43,11 +43,11 @@ APassarelaCreator::APassarelaCreator()
 
 	RootComponent = RootComp;
 
-	ArrowTOP->AttachToComponent(RootComp, FAttachmentTransformRules::KeepRelativeTransform);
-	ArrowDOWN->AttachToComponent(RootComp, FAttachmentTransformRules::KeepRelativeTransform);
-	BoxDeath->AttachToComponent(RootComp, FAttachmentTransformRules::KeepRelativeTransform);
-	Audio->AttachToComponent(RootComp, FAttachmentTransformRules::KeepRelativeTransform);
-	PlatformaTeto->AttachToComponent(RootComp, FAttachmentTransformRules::KeepRelativeTransform);
+	ArrowTOP->SetupAttachment(RootComp);
+	ArrowDOWN->SetupAttachment(RootComp);
+	BoxDeath->SetupAttachment(RootComp);
+	Audio->SetupAttachment(RootComp);
+	PlatformaTeto->SetupAttachment(RootComp);
 
 	BoxDeath->SetRelativeScale3D(FVector(300.0f, 300.0f, 1.0f));
 	BoxDeath->SetRelativeLocation(FVector(0.0f, 0.0f, -300.0f));
@@ -142,7 +142,7 @@ void APassarelaCreator::CriarPlatform()
 	VecMeshLoc.Z = AlturaPlataforma * Counter;
 
 	UStaticMeshComponent *SMComp = NewObject<UStaticMeshComponent>(this);
-	SMComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	SMComp->SetupAttachment(RootComponent);
 	SMComp->SetRelativeLocation(VecMeshLoc);
 	SMComp->SetRelativeScale3D(FVector(3.0f, 1.0f, 1.0f));
 
@@ -155,7 +155,7 @@ void APassarelaCreator::CriarPlatform()
 	BoxDeath->SetRelativeLocation(VecMeshLoc);
 
 	UBoxComponent *BoxCompPassRole = NewObject<UBoxComponent>(this);
-	BoxCompPassRole->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	BoxCompPassRole->SetupAttachment(RootComponent);
 	BoxCompPassRole->SetRelativeLocation(VecMeshLoc);
 	BoxCompPassRole->SetGenerateOverlapEvents(true);
 	BoxCompPassRole->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
@@ -213,8 +213,9 @@ void APassarelaCreator::CriarMina(FVector loc)
 	for (int32 i = 0; i < NumMinas; i++)
 	{
 		UChildActorComponent *MinaToSpawn = NewObject<UChildActorComponent>(this);
-		MinaToSpawn->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-		FVector InnerPosition(FMath::RandRange(-100, 100), FMath::RandRange(-1350, 1350), loc.Z + 100);
+		MinaToSpawn->SetupAttachment(RootComponent);
+		// XUXU CAPETA.
+		FVector InnerPosition(FMath::RandRange(-80, 80), FMath::RandRange(-1300, 1300), loc.Z + 150);
 		MinaToSpawn->SetRelativeLocation(InnerPosition);
 		MinaToSpawn->SetChildActorClass(AMinaExplosiva::StaticClass());
 		MinaToSpawn->RegisterComponent();

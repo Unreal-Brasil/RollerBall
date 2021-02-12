@@ -21,4 +21,10 @@ protected:
 
 private:
 	class UStaticMeshComponent *MineMeshComponent;
+	class URadialForceComponent *ForcaExplosaoComponent;
+
+	bool bExploded;
+
+	UFUNCTION()
+	void MinaOverlapBegin(class UPrimitiveComponent *OverlappedComp, class AActor *Other, class UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 };
