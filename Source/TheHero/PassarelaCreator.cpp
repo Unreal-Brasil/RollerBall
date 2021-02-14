@@ -9,9 +9,13 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "TheHeroInstance.h"
+#include "PhysicsEngine/BoxElem.h"
+#include "PhysicsEngine/BodySetup.h"
 #include "MinaExplosiva.h"
+#include "Engine/StaticMesh.h"
 #include "Components/ChildActorComponent.h"
 #include "TP_Rolling/TP_RollingBall.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 APassarelaCreator::APassarelaCreator()
@@ -22,7 +26,7 @@ APassarelaCreator::APassarelaCreator()
 	AlturaPlataforma = -550.0f;
 	PointToDelivery = 5;
 
-	USceneComponent *RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
+	USceneComponent* RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 	ArrowTOP = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowTOP"));
 	ArrowDOWN = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowDOWN"));
 	BoxDeath = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxDeath"));
@@ -113,7 +117,7 @@ void APassarelaCreator::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (size_t i = 0; i < 10; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		CriarPlatform();
 	}
@@ -141,7 +145,7 @@ void APassarelaCreator::CriarPlatform()
 	FVector VecMeshLoc;
 	VecMeshLoc.Z = AlturaPlataforma * Counter;
 
-	UStaticMeshComponent *SMComp = NewObject<UStaticMeshComponent>(this);
+	UStaticMeshComponent* SMComp = NewObject<UStaticMeshComponent>(this);
 	SMComp->SetupAttachment(RootComponent);
 	SMComp->SetRelativeLocation(VecMeshLoc);
 	SMComp->SetRelativeScale3D(FVector(3.0f, 1.0f, 1.0f));
@@ -151,10 +155,12 @@ void APassarelaCreator::CriarPlatform()
 	SMComp->SetStaticMesh(SmToAdd);
 	SMComp->RegisterComponent();
 
+	TArray<FKBoxElem> box_elements = SMComp->GetBodySetup()->AggGeom.BoxElems;
+
 	ArrowDOWN->SetRelativeLocation(VecMeshLoc);
 	BoxDeath->SetRelativeLocation(VecMeshLoc);
 
-	UBoxComponent *BoxCompPassRole = NewObject<UBoxComponent>(this);
+	UBoxComponent* BoxCompPassRole = NewObject<UBoxComponent>(this);
 	BoxCompPassRole->SetupAttachment(RootComponent);
 	BoxCompPassRole->SetRelativeLocation(VecMeshLoc);
 	BoxCompPassRole->SetGenerateOverlapEvents(true);
@@ -163,7 +169,7 @@ void APassarelaCreator::CriarPlatform()
 	BoxCompPassRole->OnComponentBeginOverlap.AddDynamic(this, &APassarelaCreator::BoxPassRoleOverlapBegin);
 	BoxCompPassRole->RegisterComponent();
 
-	CriarMina(VecMeshLoc);
+	CriarMina(VecMeshLoc, box_elements);
 }
 
 /**
@@ -171,11 +177,11 @@ void APassarelaCreator::CriarPlatform()
 */
 void APassarelaCreator::DestruirPlatform()
 {
-	TArray<UStaticMeshComponent *> outComp;
+	TArray<UStaticMeshComponent*> outComp;
 	GetComponents<UStaticMeshComponent>(outComp);
 
 	auto MyPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	for (auto &&i : outComp)
+	for (auto&& i : outComp)
 	{
 		FVector mesh_comp_loc = i->GetComponentLocation();
 		FVector pawn_loc = MyPawn->GetActorLocation();
@@ -189,11 +195,11 @@ void APassarelaCreator::DestruirPlatform()
 
 void APassarelaCreator::DestruirMinasNaoUsadas()
 {
-	TArray<UChildActorComponent *> outComp;
+	TArray<UChildActorComponent*> outComp;
 	GetComponents<UChildActorComponent>(outComp);
 
 	auto MyPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	for (auto &&i : outComp)
+	for (auto&& i : outComp)
 	{
 		FVector mesh_comp_loc = i->GetComponentLocation();
 		FVector pawn_loc = MyPawn->GetActorLocation();
@@ -205,20 +211,32 @@ void APassarelaCreator::DestruirMinasNaoUsadas()
 	}
 }
 
-void APassarelaCreator::CriarMina(FVector loc)
+/**
+* QUE FUNÇÃO DOS INFERNOS PARA CONSTRUIR.
+*/
+void APassarelaCreator::CriarMina(FVector loc, TArray<FKBoxElem> box_coll)
 {
+	int32 NumMinas = FMath::RandRange(0, 2);
 
-	int32 NumMinas = FMath::RandRange(0, 3);
-
-	for (int32 i = 0; i < NumMinas; i++)
+	for (auto&& i : box_coll)
 	{
-		UChildActorComponent *MinaToSpawn = NewObject<UChildActorComponent>(this);
-		MinaToSpawn->SetupAttachment(RootComponent);
-		// XUXU CAPETA.
-		FVector InnerPosition(FMath::RandRange(-80, 80), FMath::RandRange(-1300, 1300), loc.Z + 150);
-		MinaToSpawn->SetRelativeLocation(InnerPosition);
-		MinaToSpawn->SetChildActorClass(AMinaExplosiva::StaticClass());
-		MinaToSpawn->RegisterComponent();
+		FVector CENTRO = i.Center;
+		FVector TAMANHO = FVector(i.X, i.Y, i.Z);
+		FVector MEIO = TAMANHO / 2.0f;
+		FVector ESQUERDA = CENTRO - MEIO;
+		FVector DIREITA = CENTRO + MEIO;
+
+		if (TAMANHO.Y >= 350.0f) {
+			for (int32 x = 0; x < NumMinas; x++)
+			{
+				UChildActorComponent* MinaToSpawn = NewObject<UChildActorComponent>(this);
+				MinaToSpawn->SetupAttachment(RootComponent);
+				FVector InnerPosition(FMath::RandRange(ESQUERDA.X, DIREITA.X), FMath::RandRange(ESQUERDA.Y, DIREITA.Y), loc.Z + DIREITA.Z);
+				MinaToSpawn->SetRelativeLocation(InnerPosition);
+				MinaToSpawn->SetChildActorClass(AMinaExplosiva::StaticClass());
+				MinaToSpawn->RegisterComponent();
+			}
+		}
 	}
 }
 
@@ -230,17 +248,16 @@ void APassarelaCreator::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void APassarelaCreator::BoxDeathOverlapBegin(class UPrimitiveComponent *OverlappedComp, class AActor *Other, class UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+void APassarelaCreator::BoxDeathOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	auto Player = Cast<ATP_RollingBall>(Other);
 	if (Player != nullptr)
 	{
 		OnPlayerDiedNow.Broadcast();
-		UE_LOG(LogTemp, Warning, TEXT("BoxDeathOverlapBegin"));
 	}
 }
 
-void APassarelaCreator::BoxPassRoleOverlapBegin(class UPrimitiveComponent *OverlappedComp, class AActor *Other, class UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+void APassarelaCreator::BoxPassRoleOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	auto Player = Cast<ATP_RollingBall>(Other);
 	if (Player != nullptr)

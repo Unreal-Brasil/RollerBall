@@ -1,10 +1,12 @@
 import { type } from "os";
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { PlayedGame } from "./PlayedGame";
 
 @Entity()
 @Unique("UNI-User", ["userName"])
 @Unique("UNI-Email", ["email"])
 export class User {
+
   @PrimaryGeneratedColumn()
   Id: Number;
 
@@ -25,4 +27,7 @@ export class User {
 
   @Column()
   habilitado: boolean;
+
+  @OneToMany(type => PlayedGame, pg => pg.user)
+  playedGames: PlayedGame[];
 }

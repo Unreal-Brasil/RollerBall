@@ -4,6 +4,7 @@ import indexRoutes from "./routes/index";
 import * as bodyParser from "body-parser";
 import { createConnection, getConnection } from "typeorm";
 import { User } from "./models/User";
+import { PlayedGame } from "./models/PlayedGame";
 
 (async () => {
   const cnn = await createConnection({
@@ -13,7 +14,10 @@ import { User } from "./models/User";
     username: "root",
     password: "senha@1010",
     database: "db_roller_ball",
-    entities: [User],
+    entities: [
+      User,
+      PlayedGame
+    ],
     synchronize: true,
     logging: false,
   });
