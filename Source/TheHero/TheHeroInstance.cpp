@@ -56,6 +56,37 @@ void UTheHeroInstance::DoCadastro(FString UserName, FString Password, FString Em
     Request->ProcessRequest();
 }
 
+void UTheHeroInstance::DoRegisterLastPlayedGame()
+{
+    auto Request = Http->CreateRequest();
+    //    Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnCadastroResponseReceived);
+    Request->SetURL("http://localhost:3000/doregistergame");
+    Request->SetVerb("POST");
+    Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
+    Request->SetHeader("Content-Type", TEXT("application/json"));
+
+    FString Payload = FString::Printf(TEXT("{ \"token\": \"%s\", \"score\":%d, \"time\":%d }"), *Token, PlayerScore, PlayerTime);
+
+    UE_LOG(LogTemp, Warning, TEXT("%s"), *Payload);
+
+    Request->SetContentAsString(Payload);
+
+    Request->ProcessRequest();
+
+}
+
+void UTheHeroInstance::RecuperarRankingGlobal()
+{
+    auto Request = Http->CreateRequest();
+    Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnRankingGlobalResponseReceived);
+    Request->SetURL("http://localhost:3000/getrankingglobal");
+    Request->SetVerb("POST");
+    Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
+    Request->SetHeader("Content-Type", TEXT("application/json"));
+
+    Request->ProcessRequest();
+}
+
 void UTheHeroInstance::OnLoginResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
     if (bWasSuccessful)
@@ -129,6 +160,48 @@ void UTheHeroInstance::OnCadastroResponseReceived(FHttpRequestPtr Request, FHttp
             GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, Mensagem);
         }
     }
+}
+
+void UTheHeroInstance::OnRankingGlobalResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+    if (bWasSuccessful)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("%s"), *Response->GetContentAsString());
+
+        //Cria um ponteiro para armazenar os dados singelos.
+        TSharedPtr<FJsonObject> JsonObject;
+
+        //Cria um ponteiro de leitura para ler os dados do json.
+        TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+
+        // Deserializa os bagulhos.
+        if (FJsonSerializer::Deserialize(Reader, JsonObject))
+        {
+            auto af = JsonObject->GetArrayField("");
+
+            UE_LOG(LogTemp, Warning, TEXT("%d"), af.Num());
+
+            // //Pega o Status
+            // FString status = JsonObject->GetStringField("status");
+
+            // if (status.Equals("OK"))
+            // {
+            //     PlayerId = JsonObject->GetIntegerField("id");
+            //     PlayerLogin = JsonObject->GetStringField("username");
+            //     Mensagem = JsonObject->GetStringField("mensagem");
+            //     OnCadastroReultSuccess.Broadcast(PlayerId, PlayerLogin, Mensagem);
+            // }
+            // else
+            // {
+            //     FString msg_error = JsonObject->GetStringField("mensagem");
+            //     OnCadastroReultError.Broadcast(msg_error);
+            // }
+
+            // //Joga na tela.
+            // GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, Mensagem);
+        }
+    }
+
 }
 
 UTheHeroInstance::UTheHeroInstance()

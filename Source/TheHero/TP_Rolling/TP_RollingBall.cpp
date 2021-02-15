@@ -50,9 +50,9 @@ ATP_RollingBall::ATP_RollingBall()
 }
 
 /**
- * 
+ *
  * Cria o particle effect quando o player passa pelos buracos.
- * 
+ *
 */
 void ATP_RollingBall::ExecuteEmitterPassRole()
 {
@@ -66,17 +66,18 @@ void ATP_RollingBall::ExecuteEmitterPassRole()
 }
 
 /**
- * 
+ *
  * Ajusta o input do player.
- * 
+ *
 */
-void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
+void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATP_RollingBall::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ATP_RollingBall::MoveForward);
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ATP_RollingBall::Jump);
+	PlayerInputComponent->BindAction("Sair", IE_Pressed, this, &ATP_RollingBall::Sair);
 
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ATP_RollingBall::TouchStarted);
@@ -84,9 +85,9 @@ void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent *PlayerInp
 }
 
 /**
- * 
+ *
  * Move o player para direita ou para a esquerda.
- * 
+ *
 */
 void ATP_RollingBall::MoveRight(float Val)
 {
@@ -95,9 +96,9 @@ void ATP_RollingBall::MoveRight(float Val)
 }
 
 /**
- * 
+ *
  * Move o player para frente e para trás.
- * 
+ *
 */
 void ATP_RollingBall::MoveForward(float Val)
 {
@@ -118,12 +119,17 @@ void ATP_RollingBall::Jump()
 	}
 }
 
+void ATP_RollingBall::Sair()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), "LMENU");
+}
+
 /**
- * 
+ *
  * Notifica o Pulo.
- * 
+ *
 */
-void ATP_RollingBall::NotifyHit(class UPrimitiveComponent *MyComp, class AActor *Other, class UPrimitiveComponent *OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult &Hit)
+void ATP_RollingBall::NotifyHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
 {
 	Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
 
@@ -131,9 +137,9 @@ void ATP_RollingBall::NotifyHit(class UPrimitiveComponent *MyComp, class AActor 
 }
 
 /**
- * 
+ *
  * Usuário toca na tela do device.
- * 
+ *
 */
 void ATP_RollingBall::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {

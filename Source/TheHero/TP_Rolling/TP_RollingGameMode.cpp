@@ -4,12 +4,13 @@
 #include "Components/AudioComponent.h"
 #include "TheHero/TheHeroInstance.h"
 #include "GameFramework/PlayerController.h"
+#include "TimerManager.h"
 #include "TheHero/PassarelaCreator.h"
 
 /**
- * 
+ *
  * Construtor da classe.
- * 
+ *
 */
 ATP_RollingGameMode::ATP_RollingGameMode()
 {
@@ -35,9 +36,9 @@ ATP_RollingGameMode::ATP_RollingGameMode()
 }
 
 /**
- * 
+ *
  * Evento de início do jogo.
- * 
+ *
  */
 void ATP_RollingGameMode::BeginPlay()
 {
@@ -46,23 +47,30 @@ void ATP_RollingGameMode::BeginPlay()
 	if (GI != nullptr)
 	{
 		CurrentGameInstance = Cast<UTheHeroInstance>(GI);
+
+		CurrentGameInstance->PlayerIsDead = false;
+		CurrentGameInstance->RecuperarRankingGlobal();
+
 		auto Passarela = Cast<APassarelaCreator>(UGameplayStatics::GetActorOfClass(GetWorld(), APassarelaCreator::StaticClass()));
 		if (Passarela != nullptr)
 		{
 			Passarela->OnPlayerDiedNow.AddDynamic(this, &ATP_RollingGameMode::OnPlayerDiedNow);
 		}
+
+		GetWorld()->GetTimerManager().SetTimer(GameTimeTimerHandle, this, &ATP_RollingGameMode::CountGameTime, 1, true, 1.0f);
 	}
 }
 
 /**
- * 
- * Evento para reiniciar o jogo. 
- * 
+ *
+ * Evento para reiniciar o jogo.
+ *
 */
 void ATP_RollingGameMode::OnPlayerDiedNow()
 {
 	if (CurrentGameInstance != nullptr)
 	{
+		CurrentGameInstance->DoRegisterLastPlayedGame();
 		CurrentGameInstance->ResetPlayerValues(0);
 
 		Audio->Play();
@@ -70,15 +78,15 @@ void ATP_RollingGameMode::OnPlayerDiedNow()
 
 		if (PC != nullptr)
 			UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->DisableInput(PC);
-
+		GetWorld()->GetTimerManager().ClearTimer(GameTimeTimerHandle);
 		GetWorld()->GetTimerManager().SetTimer(ReloadGameTimerHandle, this, &ATP_RollingGameMode::CountDownToRestartGame, 1, true, 0.0f);
 	}
 }
 
 /**
- * 
+ *
  * Evento de Tick executado a cada quadro do jogo.
- * 
+ *
 */
 void ATP_RollingGameMode::Tick(float DeltaTime)
 {
@@ -110,5 +118,18 @@ void ATP_RollingGameMode::CountDownToRestartGame()
 	if (CountDownToRestart < 0)
 	{
 		UGameplayStatics::OpenLevel(GetWorld(), "L1");
+	}
+}
+
+void ATP_RollingGameMode::CountGameTime()
+{
+	auto GI = GetGameInstance();
+	if (GI != nullptr)
+	{
+		CurrentGameInstance = Cast<UTheHeroInstance>(GI);
+		if (!CurrentGameInstance->PlayerIsDead) {
+			CurrentGameInstance->UpdatePlayerTime(1);
+		}
+
 	}
 }

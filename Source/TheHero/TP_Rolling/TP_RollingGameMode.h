@@ -11,32 +11,38 @@ class ATP_RollingGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDied);
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDied);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCountDownSignature, int, counter);
 
 public:
 	ATP_RollingGameMode();
 
 	UPROPERTY(BlueprintAssignable)
-	FPlayerDied OnPlayerDied;
+		FPlayerDied OnPlayerDied;
 
 	UPROPERTY(BlueprintAssignable)
-	FCountDownSignature OnCountDownToRestart;
+		FCountDownSignature OnCountDownToRestart;
 
 private:
-	class UTheHeroInstance *CurrentGameInstance;
+	class UTheHeroInstance* CurrentGameInstance;
 	bool IsClosed;
-	class UAudioComponent *Audio;
+	class UAudioComponent* Audio;
 
 	FTimerHandle ReloadGameTimerHandle;
+	FTimerHandle GameTimeTimerHandle;
+
 	int CountDownToRestart;
 	UFUNCTION()
-	void OnPlayerDiedNow();
+		void OnPlayerDiedNow();
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	void CountDownToRestartGame();
+		void CountDownToRestartGame();
+
+	UFUNCTION()
+		void CountGameTime();
+
 };

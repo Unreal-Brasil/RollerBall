@@ -9,11 +9,11 @@ export class PlayedGame {
   @PrimaryGeneratedColumn()
   Id: number;
 
-  @Column()
+  @Column({ type: "numeric" })
   score: number;
 
-  @Column({ length: 10 })
-  time: string;
+  @Column({ type: "numeric" })
+  time: number;
 
   @Column({ nullable: true, type: "datetime" })
   dataJogo: Date;
