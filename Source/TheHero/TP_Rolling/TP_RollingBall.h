@@ -40,6 +40,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void ExecuteEmitterPassRole();
 
+	UFUNCTION(BlueprintCallable)
+		void ExecuteEmitterAtBegin();
+
+	UFUNCTION(BlueprintCallable)
+		void ExecuteEmitterAtDeath();
+
+
+
 protected:
 
 	/** Called for side to side input */

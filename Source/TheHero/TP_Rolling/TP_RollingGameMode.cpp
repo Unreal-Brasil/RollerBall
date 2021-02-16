@@ -43,6 +43,7 @@ ATP_RollingGameMode::ATP_RollingGameMode()
 void ATP_RollingGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+
 	auto GI = GetGameInstance();
 	if (GI != nullptr)
 	{
@@ -56,6 +57,17 @@ void ATP_RollingGameMode::BeginPlay()
 		{
 			Passarela->OnPlayerDiedNow.AddDynamic(this, &ATP_RollingGameMode::OnPlayerDiedNow);
 		}
+
+		auto PC = GetWorld()->GetFirstPlayerController();
+		if (PC != nullptr) {
+
+			auto PP = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+			if (PP) {
+				ATP_RollingBall* RollPP = Cast<ATP_RollingBall>(PP);
+				RollPP->ExecuteEmitterAtBegin();
+			}
+		}
+
 
 		GetWorld()->GetTimerManager().SetTimer(GameTimeTimerHandle, this, &ATP_RollingGameMode::CountGameTime, 1, true, 1.0f);
 	}
@@ -74,10 +86,19 @@ void ATP_RollingGameMode::OnPlayerDiedNow()
 		CurrentGameInstance->ResetPlayerValues(0);
 
 		Audio->Play();
-		auto PC = GetWorld()->GetFirstPlayerController();
 
-		if (PC != nullptr)
-			UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->DisableInput(PC);
+		auto PC = GetWorld()->GetFirstPlayerController();
+		if (PC != nullptr) {
+
+			auto PP = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+			if (PP) {
+				ATP_RollingBall* RollPP = Cast<ATP_RollingBall>(PP);
+				RollPP->DisableInput(PC);
+				RollPP->ExecuteEmitterAtDeath();
+			}
+		}
+
+
 		GetWorld()->GetTimerManager().ClearTimer(GameTimeTimerHandle);
 		GetWorld()->GetTimerManager().SetTimer(ReloadGameTimerHandle, this, &ATP_RollingGameMode::CountDownToRestartGame, 1, true, 0.0f);
 	}

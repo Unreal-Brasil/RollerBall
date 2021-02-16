@@ -123,6 +123,10 @@ void UTheHeroInstance::OnLoginResponseReceived(FHttpRequestPtr Request, FHttpRes
             GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, Mensagem);
         }
     }
+    else
+    {
+        OnLoginResultError.Broadcast("Ocorreu um erro inesperado!");
+    }
 }
 
 void UTheHeroInstance::OnCadastroResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)

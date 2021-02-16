@@ -21,7 +21,7 @@ AMinaExplosiva::AMinaExplosiva()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_MINE(TEXT("/Game/Geometry/Meshes/MaterialSphere"));
 	static ConstructorHelpers::FObjectFinder<USoundBase> SOUND_EXPLODE(TEXT("/Game/Audio/phasingbeam02_Cue"));
 
-	USceneComponent *RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
+	USceneComponent* RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 	Audio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));
 
 	RootComponent = RootComp;
@@ -57,7 +57,7 @@ void AMinaExplosiva::BeginPlay()
 	MineMeshComponent->OnComponentBeginOverlap.AddDynamic(this, &AMinaExplosiva::MinaOverlapBegin);
 }
 
-void AMinaExplosiva::MinaOverlapBegin(class UPrimitiveComponent *OverlappedComp, class AActor *Other, class UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+void AMinaExplosiva::MinaOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("MinaOverlapBegin"));
 	if (bExploded)

@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 
 ATP_RollingBall::ATP_RollingBall()
 {
@@ -62,6 +63,29 @@ void ATP_RollingBall::ExecuteEmitterPassRole()
 		FString particleEffectPath = "/Game/Particles/PS_PassRole";
 		auto ps = Cast<UParticleSystem>(StaticLoadObject(UParticleSystem::StaticClass(), NULL, *particleEffectPath));
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ps, ball_loc, FRotator(0), true, EPSCPoolMethod::None, true);
+	}
+}
+
+void ATP_RollingBall::ExecuteEmitterAtBegin()
+{
+	if (Ball != nullptr)
+	{
+		auto ball_loc = Ball->GetComponentLocation();
+		FString particleEffectPath = "/Game/InfinityBladeEffects/Effects/FX_Combat_Base/Enchants/P_Enchant_Cooldowns";
+		auto ps = Cast<UParticleSystem>(StaticLoadObject(UParticleSystem::StaticClass(), NULL, *particleEffectPath));
+		UGameplayStatics::SpawnEmitterAttached(ps, RootComponent);
+	}
+}
+
+void ATP_RollingBall::ExecuteEmitterAtDeath()
+{
+	if (Ball != nullptr)
+	{
+		auto ball_loc = Ball->GetComponentLocation();
+		FString particleEffectPath = "/Game/InfinityBladeEffects/Effects/FX_Monsters/FX_Monster_Gruntling/Notifies/P_Death_backpack_expl";
+		auto ps = Cast<UParticleSystem>(StaticLoadObject(UParticleSystem::StaticClass(), NULL, *particleEffectPath));
+		Ball->SetVisibility(false, false);
+		UGameplayStatics::SpawnEmitterAttached(ps, RootComponent);
 	}
 }
 
