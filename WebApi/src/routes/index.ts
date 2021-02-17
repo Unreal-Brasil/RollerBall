@@ -116,10 +116,16 @@ router.post("/doregistergame", async (req, res) => {
 
 router.post("/getrankingglobal", async (req, res) => {
   let x = new RankingService()
-
   const ranking = await x.getGlobalRanking();
 
-  res.json(ranking);
+  let ret_val = {
+    status: "OK",
+    ranking: ranking,
+  };
+
+
+
+  res.json(ret_val);
 });
 
 

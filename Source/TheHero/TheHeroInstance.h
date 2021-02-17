@@ -8,6 +8,25 @@
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "TheHeroInstance.generated.h"
 
+USTRUCT(BlueprintType)
+struct FRankingItemUserData
+{
+public:
+
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FString PosicaoRanking;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FString LoginUsuario;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FString PontuacaoUsuario;
+};
+
+
+
 /**
  *
  */
@@ -16,11 +35,18 @@ class THEHERO_API UTheHeroInstance : public UGameInstance
 {
 	GENERATED_BODY()
 
-		DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FLoginResultSuccessSignature, int, Id, FString, Login, FString, Token, FString, SuccessMessage);
+public:
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FLoginResultSuccessSignature, int, Id, FString, Login, FString, Token, FString, SuccessMessage);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FLoginResultErrorSignature, FString, ErrorMessage);
 	// -----------------------------------------------------------
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FCadastroResultSuccessSignature, int, Id, FString, Login, FString, SuccessMessage);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCadastroResultErrorSignature, FString, ErrorMessage);
+
+	// -----------------------------------------------------------
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FRecuperarRankingGlobalResultSuccessSignature, const TArray<struct FRankingItemUserData>&, RankingGlobal);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FRecuperarRankingGlobalResultErrorSignature, FString, ErrorMessage);
+
 
 private:
 	FHttpModule* Http;
@@ -30,6 +56,8 @@ private:
 	void OnRankingGlobalResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	FString Mensagem;
 	FString Token;
+
+	TArray<struct FRankingItemUserData> RankingList;
 
 public:
 	UTheHeroInstance();
@@ -45,6 +73,13 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 		FLoginResultErrorSignature OnLoginResultError;
+
+	UPROPERTY(BlueprintAssignable)
+		FRecuperarRankingGlobalResultSuccessSignature OnRecuperarRankingGlobalResultSuccess;
+
+	UPROPERTY(BlueprintAssignable)
+		FRecuperarRankingGlobalResultErrorSignature OnRecuperarRankingGlobalResultError;
+
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerScore")
 		bool PlayerIsDead;

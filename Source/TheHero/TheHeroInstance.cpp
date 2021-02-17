@@ -1,5 +1,6 @@
 #include "TheHeroInstance.h"
 
+
 void UTheHeroInstance::UpdatePlayerScore(int valor)
 {
     PlayerScore += valor;
@@ -25,8 +26,6 @@ void UTheHeroInstance::DoLogin(FString UserName, FString Password)
     Request->SetVerb("POST");
     Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
     Request->SetHeader("Content-Type", TEXT("application/json"));
-
-    //const FString Payload("{ \"userName\": \"" + UserName + "\", \"password\":\"" + Password + "\"}");
 
     FString Payload = FString::Printf(TEXT("{ \"userName\": \"%s\", \"password\":\"%s\"}"), *UserName, *Password);
 
@@ -59,7 +58,6 @@ void UTheHeroInstance::DoCadastro(FString UserName, FString Password, FString Em
 void UTheHeroInstance::DoRegisterLastPlayedGame()
 {
     auto Request = Http->CreateRequest();
-    //    Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnCadastroResponseReceived);
     Request->SetURL("http://localhost:3000/doregistergame");
     Request->SetVerb("POST");
     Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
@@ -172,6 +170,7 @@ void UTheHeroInstance::OnRankingGlobalResponseReceived(FHttpRequestPtr Request, 
     {
         UE_LOG(LogTemp, Warning, TEXT("%s"), *Response->GetContentAsString());
 
+        RankingList.Empty();
         //Cria um ponteiro para armazenar os dados singelos.
         TSharedPtr<FJsonObject> JsonObject;
 
@@ -181,28 +180,30 @@ void UTheHeroInstance::OnRankingGlobalResponseReceived(FHttpRequestPtr Request, 
         // Deserializa os bagulhos.
         if (FJsonSerializer::Deserialize(Reader, JsonObject))
         {
-            auto af = JsonObject->GetArrayField("");
+            auto list_ranking = JsonObject->GetArrayField("ranking");
 
-            UE_LOG(LogTemp, Warning, TEXT("%d"), af.Num());
+            for (int w = 0;w < list_ranking.Num();w++) {
+                FRankingItemUserData ud = FRankingItemUserData();
 
-            // //Pega o Status
-            // FString status = JsonObject->GetStringField("status");
+                const TSharedPtr<FJsonObject>* objrow;
 
-            // if (status.Equals("OK"))
-            // {
-            //     PlayerId = JsonObject->GetIntegerField("id");
-            //     PlayerLogin = JsonObject->GetStringField("username");
-            //     Mensagem = JsonObject->GetStringField("mensagem");
-            //     OnCadastroReultSuccess.Broadcast(PlayerId, PlayerLogin, Mensagem);
-            // }
-            // else
-            // {
-            //     FString msg_error = JsonObject->GetStringField("mensagem");
-            //     OnCadastroReultError.Broadcast(msg_error);
-            // }
+                bool result_get = list_ranking[w]->TryGetObject(objrow);
 
-            // //Joga na tela.
-            // GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, Mensagem);
+                if (result_get) {
+                    ud.PosicaoRanking = FString::FromInt(w + 1);
+                    ud.LoginUsuario = objrow->Get()->GetStringField("userName");
+                    ud.PontuacaoUsuario = objrow->Get()->GetStringField("maxScore");
+                    RankingList.Add(ud);
+                }
+            }
+
+
+            if (RankingList.Num() > 0) {
+                OnRecuperarRankingGlobalResultSuccess.Broadcast(RankingList);
+            }
+            else {
+                OnRecuperarRankingGlobalResultError.Broadcast("Nenhuma informação recuperada!");
+            }
         }
     }
 
