@@ -33,6 +33,8 @@ private:
 	FTimerHandle DestroyMinasTimerHandle;
 	int Counter;
 	float AlturaPlataforma;
+	FVector PosicaoCockpit;
+	FVector TamanhoCockpit;
 	int PointToDelivery;
 
 	class UArrowComponent* ArrowTOP;
@@ -40,6 +42,7 @@ private:
 	class UBoxComponent* BoxDeath;
 	class UAudioComponent* Audio;
 	class UStaticMeshComponent* PlatformaTeto;
+	class UStaticMeshComponent* CockpitFundo;
 
 	UFUNCTION()
 		void BoxDeathOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

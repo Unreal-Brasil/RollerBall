@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "PassarelaCreator.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/StaticMesh.h"
@@ -25,13 +23,15 @@ APassarelaCreator::APassarelaCreator()
 	Counter = 0;
 	AlturaPlataforma = -550.0f;
 	PointToDelivery = 5;
-
+	PosicaoCockpit = FVector(0, 0, 0);
 	USceneComponent* RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 	ArrowTOP = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowTOP"));
 	ArrowDOWN = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowDOWN"));
 	BoxDeath = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxDeath"));
 	Audio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));
 	PlatformaTeto = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlatformaTeto"));
+	CockpitFundo = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CockpitFundo"));
+
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_PASS_00_A(TEXT("/Game/Geometry/Meshes/SM_PASS_00_A"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_PASS_01_A(TEXT("/Game/Geometry/Meshes/SM_PASS_01_A"));
@@ -43,6 +43,7 @@ APassarelaCreator::APassarelaCreator()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_PASS_03_A(TEXT("/Game/Geometry/Meshes/SM_PASS_03_A"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_PASS_03_B(TEXT("/Game/Geometry/Meshes/SM_PASS_03_B"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_PASS_03_C(TEXT("/Game/Geometry/Meshes/SM_PASS_03_C"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_COCKPIT_FUNDO(TEXT("/Game/Geometry/Meshes/SM_Cockpit"));
 	static ConstructorHelpers::FObjectFinder<USoundBase> SOUND_PASS_ROLE(TEXT("/Game/Audio/confirmation-alert_Cue"));
 
 	RootComponent = RootComp;
@@ -52,13 +53,17 @@ APassarelaCreator::APassarelaCreator()
 	BoxDeath->SetupAttachment(RootComp);
 	Audio->SetupAttachment(RootComp);
 	PlatformaTeto->SetupAttachment(RootComp);
-
+	CockpitFundo->SetupAttachment(RootComp);
+	
 	BoxDeath->SetRelativeScale3D(FVector(300.0f, 300.0f, 1.0f));
 	BoxDeath->SetRelativeLocation(FVector(0.0f, 0.0f, -300.0f));
 	BoxDeath->SetMobility(EComponentMobility::Stationary);
 
 	Audio->SetAutoActivate(false);
 
+	if (SM_COCKPIT_FUNDO.Object != nullptr) {
+		CockpitFundo->SetStaticMesh(SM_COCKPIT_FUNDO.Object);
+	}
 	if (SOUND_PASS_ROLE.Object != nullptr)
 	{
 		Audio->SetSound(SOUND_PASS_ROLE.Object);
@@ -110,6 +115,12 @@ APassarelaCreator::APassarelaCreator()
 	PlatformaTeto->SetRelativeLocation(VecMeshLoc);
 	PlatformaTeto->SetStaticMesh(Passarelas[0]);
 	PlatformaTeto->SetRelativeScale3D(FVector(3.0f, 1.0f, 1.0f));
+
+	PosicaoCockpit = CockpitFundo->GetRelativeLocation();
+	PosicaoCockpit.Y = 1368;
+	PosicaoCockpit.Z = 2500;
+	CockpitFundo->SetMobility(EComponentMobility::Movable);
+	CockpitFundo->SetRelativeLocation(PosicaoCockpit);
 }
 
 // Called when the game starts or when spawned
@@ -123,7 +134,6 @@ void APassarelaCreator::BeginPlay()
 	}
 
 	BoxDeath->OnComponentBeginOverlap.AddDynamic(this, &APassarelaCreator::BoxDeathOverlapBegin);
-	//GetWorld()->GetTimerManager().SetTimer(LoadPlatformTimerHandle, this, &APassarelaCreator::CriarPlatform, 3, true);
 	GetWorld()->GetTimerManager().SetTimer(DestroyPlatformTimerHandle, this, &APassarelaCreator::DestruirPlatform, 3, true);
 	GetWorld()->GetTimerManager().SetTimer(DestroyMinasTimerHandle, this, &APassarelaCreator::DestruirMinasNaoUsadas, 3, true);
 }
@@ -160,6 +170,11 @@ void APassarelaCreator::CriarPlatform()
 	ArrowDOWN->SetRelativeLocation(VecMeshLoc);
 	BoxDeath->SetRelativeLocation(VecMeshLoc);
 
+	CockpitFundo->SetRelativeScale3D(FVector(1,1,3));
+	PosicaoCockpit = CockpitFundo->GetRelativeLocation();
+	PosicaoCockpit.Z = PosicaoCockpit.Z - 400.0f;
+	CockpitFundo->SetRelativeLocation(PosicaoCockpit);
+	
 	UBoxComponent* BoxCompPassRole = NewObject<UBoxComponent>(this);
 	BoxCompPassRole->SetupAttachment(RootComponent);
 	BoxCompPassRole->SetRelativeLocation(VecMeshLoc);
@@ -183,12 +198,15 @@ void APassarelaCreator::DestruirPlatform()
 	auto MyPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	for (auto&& i : outComp)
 	{
-		FVector mesh_comp_loc = i->GetComponentLocation();
-		FVector pawn_loc = MyPawn->GetActorLocation();
+		const FString ObjName = i->GetName();
+		if (!ObjName.Equals("CockpitFundo")) {
+			FVector mesh_comp_loc = i->GetComponentLocation();
+			FVector pawn_loc = MyPawn->GetActorLocation();
 
-		if (mesh_comp_loc.Z > pawn_loc.Z)
-		{
-			i->DestroyComponent();
+			if (mesh_comp_loc.Z > pawn_loc.Z)
+			{
+				i->DestroyComponent();
+			}
 		}
 	}
 }
@@ -217,7 +235,6 @@ void APassarelaCreator::DestruirMinasNaoUsadas()
 void APassarelaCreator::CriarMina(FVector loc, TArray<FKBoxElem> box_coll)
 {
 	int32 NumMinas = FMath::RandRange(0, 2);
-
 	for (auto&& i : box_coll)
 	{
 		FVector CENTRO = i.Center;
@@ -227,6 +244,7 @@ void APassarelaCreator::CriarMina(FVector loc, TArray<FKBoxElem> box_coll)
 		FVector DIREITA = CENTRO + MEIO;
 
 		if (TAMANHO.Y >= 350.0f) {
+
 			for (int32 x = 0; x < NumMinas; x++)
 			{
 				UChildActorComponent* MinaToSpawn = NewObject<UChildActorComponent>(this);

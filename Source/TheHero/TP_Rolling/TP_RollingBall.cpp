@@ -85,15 +85,10 @@ void ATP_RollingBall::ExecuteEmitterAtDeath()
 		FString particleEffectPath = "/Game/InfinityBladeEffects/Effects/FX_Monsters/FX_Monster_Gruntling/Notifies/P_Death_backpack_expl";
 		auto ps = Cast<UParticleSystem>(StaticLoadObject(UParticleSystem::StaticClass(), NULL, *particleEffectPath));
 		Ball->SetVisibility(false, false);
-		UGameplayStatics::SpawnEmitterAttached(ps, RootComponent);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ps, ball_loc);
 	}
 }
 
-/**
- *
- * Ajusta o input do player.
- *
-*/
 void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// set up gameplay key bindings

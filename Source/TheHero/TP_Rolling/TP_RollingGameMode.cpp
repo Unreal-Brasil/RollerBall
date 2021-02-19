@@ -4,6 +4,7 @@
 #include "Components/AudioComponent.h"
 #include "TheHero/TheHeroInstance.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/StaticMeshComponent.h"
 #include "TimerManager.h"
 #include "TheHero/PassarelaCreator.h"
 
@@ -93,11 +94,14 @@ void ATP_RollingGameMode::OnPlayerDiedNow()
 			auto PP = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 			if (PP) {
 				ATP_RollingBall* RollPP = Cast<ATP_RollingBall>(PP);
+				auto base_comp = Cast<UStaticMeshComponent>(RollPP->GetRootComponent());
+				if (base_comp) {
+					base_comp->SetSimulatePhysics(false);
+				}
 				RollPP->DisableInput(PC);
 				RollPP->ExecuteEmitterAtDeath();
 			}
 		}
-
 
 		GetWorld()->GetTimerManager().ClearTimer(GameTimeTimerHandle);
 		GetWorld()->GetTimerManager().SetTimer(ReloadGameTimerHandle, this, &ATP_RollingGameMode::CountDownToRestartGame, 1, true, 0.0f);
