@@ -11,13 +11,13 @@ class THEHERO_API APassarelaCreator : public AActor
 {
 	GENERATED_BODY()
 
-		DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPlayerGotPoint, int, ponto);
+public:
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPlayerGotPoint, int, ponto);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDiedNow);
 
 public:
-	// Sets default values for this actor's properties
+
 	APassarelaCreator();
-	virtual void Tick(float DeltaTime) override;
 
 	TArray<class UStaticMesh*> Passarelas;
 
@@ -56,6 +56,9 @@ protected:
 
 	UFUNCTION()
 		void CriarPlatform();
+
+	UFUNCTION()
+		void CriarTubo(float X, float Y, float Z);
 
 	UFUNCTION()
 		void DestruirPlatform();

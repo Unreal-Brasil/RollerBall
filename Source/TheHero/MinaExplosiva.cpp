@@ -28,7 +28,11 @@ AMinaExplosiva::AMinaExplosiva()
 
 	MineMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MineMeshComponent"));
 	MineMeshComponent->SetupAttachment(RootComp);
-	MineMeshComponent->SetStaticMesh(SM_MINE.Object);
+
+	if (SM_MINE.Object != nullptr) {
+		MineMeshComponent->SetStaticMesh(SM_MINE.Object);
+	}
+
 	MineMeshComponent->SetRelativeScale3D(FVector(1.5f, 1.5f, 1.5f));
 
 	ForcaExplosaoComponent = CreateDefaultSubobject<URadialForceComponent>(TEXT("ForcaExplosaoComponent"));

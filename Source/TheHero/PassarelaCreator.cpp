@@ -14,12 +14,11 @@
 #include "Components/ChildActorComponent.h"
 #include "TP_Rolling/TP_RollingBall.h"
 #include "DrawDebugHelpers.h"
+#include "Tubo.h"
 
 // Sets default values
 APassarelaCreator::APassarelaCreator()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 	Counter = 0;
 	AlturaPlataforma = -550.0f;
 	PointToDelivery = 5;
@@ -44,6 +43,7 @@ APassarelaCreator::APassarelaCreator()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_PASS_03_B(TEXT("/Game/Geometry/Meshes/SM_PASS_03_B"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_PASS_03_C(TEXT("/Game/Geometry/Meshes/SM_PASS_03_C"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_COCKPIT_FUNDO(TEXT("/Game/Geometry/Meshes/SM_Cockpit"));
+	///
 	static ConstructorHelpers::FObjectFinder<USoundBase> SOUND_PASS_ROLE(TEXT("/Game/Audio/confirmation-alert_Cue"));
 
 	RootComponent = RootComp;
@@ -54,7 +54,7 @@ APassarelaCreator::APassarelaCreator()
 	Audio->SetupAttachment(RootComp);
 	PlatformaTeto->SetupAttachment(RootComp);
 	CockpitFundo->SetupAttachment(RootComp);
-	
+
 	BoxDeath->SetRelativeScale3D(FVector(300.0f, 300.0f, 1.0f));
 	BoxDeath->SetRelativeLocation(FVector(0.0f, 0.0f, -300.0f));
 	BoxDeath->SetMobility(EComponentMobility::Stationary);
@@ -170,11 +170,11 @@ void APassarelaCreator::CriarPlatform()
 	ArrowDOWN->SetRelativeLocation(VecMeshLoc);
 	BoxDeath->SetRelativeLocation(VecMeshLoc);
 
-	CockpitFundo->SetRelativeScale3D(FVector(1,1,3));
+	CockpitFundo->SetRelativeScale3D(FVector(1, 1, 3));
 	PosicaoCockpit = CockpitFundo->GetRelativeLocation();
 	PosicaoCockpit.Z = PosicaoCockpit.Z - 400.0f;
 	CockpitFundo->SetRelativeLocation(PosicaoCockpit);
-	
+
 	UBoxComponent* BoxCompPassRole = NewObject<UBoxComponent>(this);
 	BoxCompPassRole->SetupAttachment(RootComponent);
 	BoxCompPassRole->SetRelativeLocation(VecMeshLoc);
@@ -186,6 +186,7 @@ void APassarelaCreator::CriarPlatform()
 
 	CriarMina(VecMeshLoc, box_elements);
 }
+
 
 /**
  * Belo método para destruir as plataformas que estão acima do player.
@@ -255,16 +256,26 @@ void APassarelaCreator::CriarMina(FVector loc, TArray<FKBoxElem> box_coll)
 				MinaToSpawn->RegisterComponent();
 			}
 		}
+
+		if (box_coll.Num() > 1) {
+			CriarTubo(loc.X, DIREITA.Y+110, loc.Z-25);
+		}
 	}
 }
 
-/**
- * Método maroto chamado a cada frame.
-*/
-void APassarelaCreator::Tick(float DeltaTime)
+void APassarelaCreator::CriarTubo(float X, float Y, float Z)
 {
-	Super::Tick(DeltaTime);
+
+	UChildActorComponent* TuboToSpawn = NewObject<UChildActorComponent>(this);
+	TuboToSpawn->SetupAttachment(RootComponent);
+	FVector InnerPosition(X, Y, Z);
+	TuboToSpawn->SetRelativeLocation(InnerPosition);
+	TuboToSpawn->SetRelativeScale3D(FVector(1.1f, 1.1f, 2.5f));
+	TuboToSpawn->SetChildActorClass(ATubo::StaticClass());
+	TuboToSpawn->RegisterComponent();
 }
+
+
 
 void APassarelaCreator::BoxDeathOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
