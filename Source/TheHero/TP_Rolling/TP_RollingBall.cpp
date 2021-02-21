@@ -97,6 +97,7 @@ void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* PlayerInp
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ATP_RollingBall::Jump);
 	PlayerInputComponent->BindAction("Sair", IE_Pressed, this, &ATP_RollingBall::Sair);
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &ATP_RollingBall::Pause).bExecuteWhenPaused = true;
 
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ATP_RollingBall::TouchStarted);
@@ -137,6 +138,17 @@ void ATP_RollingBall::Jump()
 		bCanJump = false;
 	}
 }
+
+void ATP_RollingBall::Pause()
+{
+	auto PC = GetWorld()->GetFirstPlayerController();
+	if (PC) {
+		bIsPaused=!	bIsPaused;
+		PC->SetPause(bIsPaused);
+		OnGamePaused.Broadcast(bIsPaused);
+	}	
+}
+
 
 void ATP_RollingBall::Sair()
 {

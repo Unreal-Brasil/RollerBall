@@ -6,6 +6,7 @@ import { getTokenKey } from "../global";
 import GameService from "../services/game-service";
 import { PlayedGame } from "../models/PlayedGame";
 import RankingService from "../services/ranking-service";
+import { Game } from "../models/Game";
 
 const router = Router();
 
@@ -116,14 +117,13 @@ router.post("/doregistergame", async (req, res) => {
 
 router.post("/getrankingglobal", async (req, res) => {
   let x = new RankingService()
-  const ranking = await x.getGlobalRanking();
+  const game = req.body as Game;
+  const ranking = await x.getGlobalRanking(game);
 
   let ret_val = {
     status: "OK",
     ranking: ranking,
   };
-
-
 
   res.json(ret_val);
 });

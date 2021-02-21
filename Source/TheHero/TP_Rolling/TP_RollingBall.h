@@ -11,8 +11,16 @@ class ATP_RollingBall : public APawn
 {
 	GENERATED_BODY()
 
-		/** StaticMesh used for the ball */
-		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
+public:
+		
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPauseGameSignature, bool, bIsPaused);
+
+	UPROPERTY(BlueprintAssignable)
+		FPauseGameSignature OnGamePaused;
+		
+protected:
+	/** StaticMesh used for the ball */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
 		class UStaticMeshComponent* Ball;
 
 	/** Spring arm for positioning the camera above the ball */
@@ -22,6 +30,12 @@ class ATP_RollingBall : public APawn
 	/** Camera to view the ball */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
 		class UCameraComponent* Camera;
+
+private:
+	bool bIsPaused = false;
+
+
+	void Pause();
 
 public:
 	ATP_RollingBall();
@@ -47,15 +61,15 @@ public:
 		void ExecuteEmitterAtDeath();
 
 
-
+	
 protected:
 
 	/** Called for side to side input */
 	void MoveRight(float Val);
 
-	/** Called to move ball forwards and backwards */
+		/** Called to move ball forwards and backwards */
 	void MoveForward(float Val);
-
+	
 	/** Handle jump action. */
 	void Jump();
 

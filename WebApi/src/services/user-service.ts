@@ -1,4 +1,5 @@
 import { getConnection } from "typeorm";
+import { Game } from "../models/Game";
 import { User } from "../models/User";
 
 export class UserService {
@@ -46,17 +47,20 @@ export class UserService {
   }
 
   async doRegister(usr: User) {
-    let result = await getConnection().getRepository(User).insert(usr);
-    let result_head = result.raw;
-    let user_tmp = new User();
+    
+    console.log(usr);
 
-    if (result_head.affectedRows > 0) {
-      user_tmp.Id = result_head.insertId;
-      user_tmp = await this.getUserById(user_tmp);
+    const sel_game = await getConnection()
+      .getRepository(Game)
+      .createQueryBuilder("game")
+      .where("game.Id = :id")
+      .setParameters({ id: usr.games[0].Id })
+      .getOne();
 
-      console.log(user_tmp);
-    }
+    usr.games = [sel_game];
 
-    return user_tmp;
+    let result = await getConnection().getRepository(User).save(usr);
+
+    return result;
   }
 }

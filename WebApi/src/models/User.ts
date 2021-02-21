@@ -1,5 +1,6 @@
 import { type } from "os";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Game } from "./Game";
 import { PlayedGame } from "./PlayedGame";
 
 @Entity()
@@ -28,6 +29,12 @@ export class User {
   @Column()
   habilitado: boolean;
 
+  @ManyToMany(type => Game, game => game.users)
+  @JoinTable()
+  games: Game[];
+
+
   @OneToMany(type => PlayedGame, pg => pg.user)
   playedGames: PlayedGame[];
+
 }

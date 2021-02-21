@@ -23,6 +23,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FCountDownSignature OnCountDownToRestart;
 
+	
 private:
 	class UTheHeroInstance* CurrentGameInstance;
 	bool IsClosed;

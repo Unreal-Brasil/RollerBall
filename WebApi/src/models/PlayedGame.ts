@@ -1,5 +1,6 @@
 import { type } from "os";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Game } from "./Game";
 import { User } from "./User";
 
 
@@ -20,4 +21,8 @@ export class PlayedGame {
 
   @ManyToOne(type => User, user => user.playedGames)
   user: User;
+
+  @ManyToOne(type => Game, game => game.playedGames)
+  game: Game;
+
 }

@@ -36,6 +36,7 @@ ATP_RollingGameMode::ATP_RollingGameMode()
 	}
 }
 
+
 /**
  *
  * Evento de início do jogo.

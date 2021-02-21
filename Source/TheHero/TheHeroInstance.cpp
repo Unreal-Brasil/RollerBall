@@ -20,6 +20,11 @@ void UTheHeroInstance::ResetPlayerValues(int valor)
 void UTheHeroInstance::DoLogin(FString UserName, FString Password)
 {
     // BENZADEUS!!!!
+    const FString file = "/Config/DefaultGame.ini";
+    const FString url_result = GConfig->GetStr(TEXT("UrlEndpoint"), TEXT("UrlBaseEndpoint"), file);
+
+    UE_LOG(LogTemp, Warning, TEXT("RESULTADO DO ARQUIVO INI: %s"), *url_result);
+    
     auto Request = Http->CreateRequest();
     Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnLoginResponseReceived);
     Request->SetURL("http://localhost:3000/dologin");
@@ -31,6 +36,8 @@ void UTheHeroInstance::DoLogin(FString UserName, FString Password)
 
     UE_LOG(LogTemp, Warning, TEXT("%s"), *Payload);
 
+    
+        
     Request->SetContentAsString(Payload);
 
     Request->ProcessRequest();
@@ -41,7 +48,8 @@ void UTheHeroInstance::DoCadastro(FString UserName, FString Password, FString Em
     // BENZADEUS!!!!
     auto Request = Http->CreateRequest();
     Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnCadastroResponseReceived);
-    Request->SetURL("http://localhost:3000/doregister");
+    const FString URL = FString::Printf(TEXT("%s/doregister"), *BaseURLAPI);
+    Request->SetURL(URL);
     Request->SetVerb("POST");
     Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
     Request->SetHeader("Content-Type", TEXT("application/json"));
@@ -58,12 +66,13 @@ void UTheHeroInstance::DoCadastro(FString UserName, FString Password, FString Em
 void UTheHeroInstance::DoRegisterLastPlayedGame()
 {
     auto Request = Http->CreateRequest();
-    Request->SetURL("http://localhost:3000/doregistergame");
+    const FString URL = FString::Printf(TEXT("%s/doregistergame"), *BaseURLAPI);
+    Request->SetURL(URL);
     Request->SetVerb("POST");
     Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
     Request->SetHeader("Content-Type", TEXT("application/json"));
 
-    FString Payload = FString::Printf(TEXT("{ \"token\": \"%s\", \"score\":%d, \"time\":%d }"), *Token, PlayerScore, PlayerTime);
+    FString Payload = FString::Printf(TEXT("{ \"token\": \"%s\", \"score\":%d, \"time\":%d, \"game\": {\"Id\": %d} }"), *Token, PlayerScore, PlayerTime, 1);
 
     UE_LOG(LogTemp, Warning, TEXT("%s"), *Payload);
 
@@ -77,11 +86,19 @@ void UTheHeroInstance::RecuperarRankingGlobal()
 {
     auto Request = Http->CreateRequest();
     Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnRankingGlobalResponseReceived);
-    Request->SetURL("http://localhost:3000/getrankingglobal");
+
+    const FString URL = FString::Printf(TEXT("%s/getrankingglobal"), *BaseURLAPI);
+    
+    Request->SetURL(URL);
     Request->SetVerb("POST");
     Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
     Request->SetHeader("Content-Type", TEXT("application/json"));
 
+    FString Payload = FString::Printf(TEXT("{\"Id\": %d}"), 1);
+
+    UE_LOG(LogTemp, Warning, TEXT("%s"), *Payload);
+
+    Request->SetContentAsString(Payload);
     Request->ProcessRequest();
 }
 
@@ -116,9 +133,6 @@ void UTheHeroInstance::OnLoginResponseReceived(FHttpRequestPtr Request, FHttpRes
                 FString msg_error = JsonObject->GetStringField("mensagem");
                 OnLoginResultError.Broadcast(msg_error);
             }
-
-            //Joga na tela.
-            GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, Mensagem);
         }
     }
     else

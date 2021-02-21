@@ -21,6 +21,9 @@ private:
 	UFUNCTION()
 		void OnCountDownUpdate(int Counter);
 
+	UFUNCTION()
+		void OnGamePaused(bool bIsPaused);
+	
 public:
 	UHUDUserWidget(const FObjectInitializer& ObjectInitializer);
 	// Optionally override the Blueprint "Event Construct" event
@@ -41,5 +44,8 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 		class UTextBlock* CountDownToRestart = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+		class UTextBlock* GamePaused = nullptr;
 
 };

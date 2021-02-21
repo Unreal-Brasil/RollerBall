@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TP_Rolling/TP_RollingGameMode.h"
 #include "TheHeroInstance.h"
+#include "TP_Rolling/TP_RollingBall.h"
 
 UHUDUserWidget::UHUDUserWidget(const FObjectInitializer& ObjectInitializer)
     : Super(ObjectInitializer)
@@ -29,10 +30,22 @@ void UHUDUserWidget::NativeConstruct()
         CountDownToRestart->SetVisibility(ESlateVisibility::Hidden);
     }
 
+
+    if (GamePaused)
+        GamePaused->SetVisibility(ESlateVisibility::Hidden);
+
     auto GM = UGameplayStatics::GetGameMode(GetWorld());
     if (GM) {
         RollingGameMode = Cast<ATP_RollingGameMode>(GM);
         RollingGameMode->OnCountDownToRestart.AddDynamic(this, &UHUDUserWidget::OnCountDownUpdate);
+    }
+
+    auto PP = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+    if (PP) {
+        ATP_RollingBall* ball = Cast<ATP_RollingBall>(PP);
+        if (ball) {
+            ball->OnGamePaused.AddDynamic(this, &UHUDUserWidget::OnGamePaused);
+        }
     }
 
     auto GI = UGameplayStatics::GetGameInstance(GetWorld());
@@ -59,5 +72,17 @@ void UHUDUserWidget::OnCountDownUpdate(int Counter)
         FString StrCounter = FString::FromInt(Counter);
         CountDownToRestart->SetVisibility(ESlateVisibility::Visible);
         CountDownToRestart->SetText(FText::FromString(StrCounter));
+    }
+}
+
+void UHUDUserWidget::OnGamePaused(bool bIsPaused)
+{
+    if (GamePaused) {
+        if (bIsPaused) {
+            GamePaused->SetVisibility(ESlateVisibility::Visible);
+        }
+        else {
+            GamePaused->SetVisibility(ESlateVisibility::Hidden);
+        }
     }
 }
