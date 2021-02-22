@@ -16,7 +16,8 @@ public:
 	ATubo();
 
 private:
-	class UStaticMeshComponent *TuboMeshComponent;
+	class UStaticMeshComponent* TuboMeshComponent;
+	class URotatingMovementComponent* RotatingTubeComponent;
 	
 protected:
 	// Called when the game starts or when spawned

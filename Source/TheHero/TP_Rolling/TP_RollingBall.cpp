@@ -17,7 +17,6 @@ ATP_RollingBall::ATP_RollingBall()
 {
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("/Game/Rolling/Meshes/BallMesh.BallMesh"));
 
-	// Create mesh component for the ball
 	Ball = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ball0"));
 	Ball->SetStaticMesh(BallMesh.Object);
 	Ball->BodyInstance.SetCollisionProfileName(UCollisionProfile::PhysicsActor_ProfileName);
@@ -29,25 +28,23 @@ ATP_RollingBall::ATP_RollingBall()
 	Ball->SetNotifyRigidBodyCollision(true);
 	RootComponent = Ball;
 
-	// Create a camera boom attached to the root (ball)
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm0"));
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->bDoCollisionTest = false;
-	SpringArm->SetUsingAbsoluteRotation(true); // Rotation of the ball should not affect rotation of boom
-	SpringArm->SetRelativeRotation(FRotator(-45.f, 0.f, 0.f));
+	SpringArm->SetUsingAbsoluteRotation(false);
+	SpringArm->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 0.0f), FRotator(-20.0f, -180.0f, 0.0f));
+	SpringArm->SetUsingAbsoluteRotation(true);
 	SpringArm->TargetArmLength = 1200.f;
 	SpringArm->bEnableCameraLag = false;
 	SpringArm->CameraLagSpeed = 3.f;
 
-	// Create a camera and attach to boom
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera0"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-	Camera->bUsePawnControlRotation = false; // We don't want the controller rotating the camera
+	Camera->bUsePawnControlRotation = false; 
 
-	// Set up forces
 	RollTorque = 50000000.0f;
 	JumpImpulse = 350000.0f;
-	bCanJump = true; // Start being able to jump
+	bCanJump = true;
 }
 
 /**

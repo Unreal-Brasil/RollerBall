@@ -12,7 +12,7 @@
 #include "Sound/SoundBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "PhysicsEngine/RadialForceComponent.h"
-
+#include "GameFramework/RotatingMovementComponent.h"
 
 ATubo::ATubo()
 {
@@ -25,18 +25,20 @@ ATubo::ATubo()
 	TuboMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TuboMeshComponent"));
 	TuboMeshComponent->SetupAttachment(RootComp);
 
+	RotatingTubeComponent = CreateDefaultSubobject<URotatingMovementComponent>("RotatingTubeComponent");
+	RotatingTubeComponent->SetUpdatedComponent(RootComponent);
+	RotatingTubeComponent->RotationRate = FRotator(0.f, FMath::RandRange(30.0f, 200.0f), 0.f);
+
 	if (SM_TUBO.Object) {
 		TuboMeshComponent->SetStaticMesh(SM_TUBO.Object);
 	}
 
 	TuboMeshComponent->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
-
 }
 
 // Called when the game starts or when spawned
 void ATubo::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 

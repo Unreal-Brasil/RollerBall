@@ -25,9 +25,12 @@ public:
 
 	
 private:
+
+	class UAudioComponent* AudioGameThemeDuringPlay;
+	class UAudioComponent* AudioGameOver;
 	class UTheHeroInstance* CurrentGameInstance;
 	bool IsClosed;
-	class UAudioComponent* Audio;
+
 
 	FTimerHandle ReloadGameTimerHandle;
 	FTimerHandle GameTimeTimerHandle;

@@ -7,6 +7,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TimerManager.h"
 #include "TheHero/PassarelaCreator.h"
+#include "Components/AudioComponent.h"
 
 /**
  *
@@ -18,24 +19,33 @@ ATP_RollingGameMode::ATP_RollingGameMode()
 	PrimaryActorTick.bCanEverTick = true;
 	CountDownToRestart = 3;
 	IsClosed = false;
+
 	static ConstructorHelpers::FObjectFinder<USoundBase> SOUND_GAME_OVER(TEXT("/Game/Audio/playgameover_Cue"));
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/RollingCPP/Blueprint/TP_RollingBallPlayer"));
+	static ConstructorHelpers::FObjectFinder<USoundBase> SOUND_GAME_THEME_PLAY(TEXT("/Game/Audio/game-theme_Cue"));
 
-	Audio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));
-	Audio->SetupAttachment(RootComponent);
-	Audio->SetAutoActivate(false);
 
-	if (PlayerPawnBPClass.Class != nullptr)
-	{
-		DefaultPawnClass = PlayerPawnBPClass.Class;
-	}
+	//static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/RollingCPP/Blueprint/TP_RollingBallPlayer"));
+
+	AudioGameOver = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioGameOver"));
+	AudioGameOver->SetupAttachment(RootComponent);
+	AudioGameOver->SetAutoActivate(false);
+
+	AudioGameThemeDuringPlay = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioGameThemeDuringPlay"));
+	AudioGameThemeDuringPlay->SetupAttachment(RootComponent);
+	AudioGameThemeDuringPlay->SetAutoActivate(false);
+
+
+	DefaultPawnClass = ATP_RollingBall::StaticClass();
 
 	if (SOUND_GAME_OVER.Object != nullptr)
 	{
-		Audio->SetSound(SOUND_GAME_OVER.Object);
+		AudioGameOver->SetSound(SOUND_GAME_OVER.Object);
+	}
+
+	if (SOUND_GAME_THEME_PLAY.Object != nullptr) {
+		AudioGameThemeDuringPlay->SetSound(SOUND_GAME_THEME_PLAY.Object);
 	}
 }
-
 
 /**
  *
@@ -49,6 +59,8 @@ void ATP_RollingGameMode::BeginPlay()
 	auto GI = GetGameInstance();
 	if (GI != nullptr)
 	{
+		AudioGameThemeDuringPlay->Play();
+
 		CurrentGameInstance = Cast<UTheHeroInstance>(GI);
 
 		CurrentGameInstance->PlayerIsDead = false;
@@ -87,7 +99,9 @@ void ATP_RollingGameMode::OnPlayerDiedNow()
 		CurrentGameInstance->DoRegisterLastPlayedGame();
 		CurrentGameInstance->ResetPlayerValues(0);
 
-		Audio->Play();
+		AudioGameThemeDuringPlay->Stop();
+
+		AudioGameOver->Play();
 
 		auto PC = GetWorld()->GetFirstPlayerController();
 		if (PC != nullptr) {
