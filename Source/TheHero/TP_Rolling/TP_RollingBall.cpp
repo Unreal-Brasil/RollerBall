@@ -12,13 +12,18 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "TheHero/TheHeroInstance.h"
 
 ATP_RollingBall::ATP_RollingBall()
 {
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("/Game/Rolling/Meshes/BallMesh.BallMesh"));
+
+	//static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("/Game/Geometry/Meshes/SM_Sphere.SM_Sphere"));
+
+		//static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(*StrMeshPlayer);
+
 
 	Ball = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ball0"));
-	Ball->SetStaticMesh(BallMesh.Object);
+
 	Ball->BodyInstance.SetCollisionProfileName(UCollisionProfile::PhysicsActor_ProfileName);
 	Ball->SetSimulatePhysics(true);
 	Ball->SetAngularDamping(0.1f);
@@ -40,11 +45,12 @@ ATP_RollingBall::ATP_RollingBall()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera0"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-	Camera->bUsePawnControlRotation = false; 
+	Camera->bUsePawnControlRotation = false;
 
 	RollTorque = 50000000.0f;
 	JumpImpulse = 350000.0f;
 	bCanJump = true;
+
 }
 
 /**
@@ -140,10 +146,10 @@ void ATP_RollingBall::Pause()
 {
 	auto PC = GetWorld()->GetFirstPlayerController();
 	if (PC) {
-		bIsPaused=!	bIsPaused;
+		bIsPaused = !bIsPaused;
 		PC->SetPause(bIsPaused);
 		OnGamePaused.Broadcast(bIsPaused);
-	}	
+	}
 }
 
 
@@ -186,5 +192,17 @@ void ATP_RollingBall::TouchStopped(ETouchIndex::Type FingerIndex, FVector Locati
 		const FVector Impulse = FVector(0.f, 0.f, JumpImpulse);
 		Ball->AddImpulse(Impulse);
 		bCanJump = false;
+	}
+}
+
+void ATP_RollingBall::BeginPlay()
+{
+	Super::BeginPlay();
+	UTheHeroInstance* GI = GetGameInstance<UTheHeroInstance>();
+
+	if (GI != nullptr) {
+		const FString StrMeshPlayer = GI->GetStringMeshForPlayer();
+		auto ps = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), NULL, *StrMeshPlayer));
+		Ball->SetStaticMesh(ps);
 	}
 }

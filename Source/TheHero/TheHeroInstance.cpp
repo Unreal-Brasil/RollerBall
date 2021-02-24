@@ -11,6 +11,7 @@ void UTheHeroInstance::UpdatePlayerTime(int valor)
     PlayerTime += valor;
 }
 
+
 void UTheHeroInstance::ResetPlayerValues(int valor)
 {
     PlayerScore = 0;
@@ -24,7 +25,7 @@ void UTheHeroInstance::DoLogin(FString UserName, FString Password)
     const FString url_result = GConfig->GetStr(TEXT("UrlEndpoint"), TEXT("UrlBaseEndpoint"), file);
 
     UE_LOG(LogTemp, Warning, TEXT("RESULTADO DO ARQUIVO INI: %s"), *url_result);
-    
+
     auto Request = Http->CreateRequest();
     Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnLoginResponseReceived);
     Request->SetURL("http://localhost:3000/dologin");
@@ -36,8 +37,8 @@ void UTheHeroInstance::DoLogin(FString UserName, FString Password)
 
     UE_LOG(LogTemp, Warning, TEXT("%s"), *Payload);
 
-    
-        
+
+
     Request->SetContentAsString(Payload);
 
     Request->ProcessRequest();
@@ -88,7 +89,7 @@ void UTheHeroInstance::RecuperarRankingGlobal()
     Request->OnProcessRequestComplete().BindUObject(this, &UTheHeroInstance::OnRankingGlobalResponseReceived);
 
     const FString URL = FString::Printf(TEXT("%s/getrankingglobal"), *BaseURLAPI);
-    
+
     Request->SetURL(URL);
     Request->SetVerb("POST");
     Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
@@ -226,4 +227,13 @@ void UTheHeroInstance::OnRankingGlobalResponseReceived(FHttpRequestPtr Request, 
 UTheHeroInstance::UTheHeroInstance()
 {
     Http = &FHttpModule::Get();
+
+    ListaMeshForPlayer.Add("/Game/Rolling/Meshes/BallMesh_MadeiraFosca.BallMesh_MadeiraFosca");
+    ListaMeshForPlayer.Add("/Game/Rolling/Meshes/BallMesh_MadeiraPolida.BallMesh_MadeiraPolida");
+    ListaMeshForPlayer.Add("/Game/Rolling/Meshes/BallMesh_Ouro.BallMesh_Ouro");
+    ListaMeshForPlayer.Add("/Game/Rolling/Meshes/BallMesh_Metalica.BallMesh_Metalica");
+    ListaMeshForPlayer.Add("/Game/Rolling/Meshes/BallMesh_Techno.BallMesh_Techno");
+    ListaMeshForPlayer.Add("/Game/Rolling/Meshes/BallMesh_Paralelepipedo.BallMesh_Paralelepipedo");
+    ListaMeshForPlayer.Add("/Game/Rolling/Meshes/BallMesh_Parede.BallMesh_Parede");
+
 }

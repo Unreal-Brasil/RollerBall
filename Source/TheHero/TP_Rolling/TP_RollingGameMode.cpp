@@ -23,9 +23,6 @@ ATP_RollingGameMode::ATP_RollingGameMode()
 	static ConstructorHelpers::FObjectFinder<USoundBase> SOUND_GAME_OVER(TEXT("/Game/Audio/playgameover_Cue"));
 	static ConstructorHelpers::FObjectFinder<USoundBase> SOUND_GAME_THEME_PLAY(TEXT("/Game/Audio/game-theme_Cue"));
 
-
-	//static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/RollingCPP/Blueprint/TP_RollingBallPlayer"));
-
 	AudioGameOver = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioGameOver"));
 	AudioGameOver->SetupAttachment(RootComponent);
 	AudioGameOver->SetAutoActivate(false);

@@ -27,6 +27,19 @@ public:
 
 
 
+UENUM()
+enum class EPlayerTypeSelection : uint8
+{
+	MadeiraFosca = 0,
+	MadeiraPolida = 1,
+	MetalOuro = 2,
+	MetalPrata = 3,
+	MetalScifi = 4,
+	PedraParalelepipedo = 5,
+	PedraParede = 6
+};
+
+
 /**
  *
  */
@@ -51,6 +64,8 @@ public:
 private:
 	FHttpModule* Http;
 
+	TArray<FString> ListaMeshForPlayer;
+
 	FString BaseURLAPI = "http://localhost:3000";
 
 	void OnLoginResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
@@ -61,8 +76,24 @@ private:
 
 	TArray<struct FRankingItemUserData> RankingList;
 
+	EPlayerTypeSelection PlayerSelection;
+
 public:
 	UTheHeroInstance();
+
+
+
+	FORCEINLINE FString GetStringMeshForPlayer() const {
+
+		UE_LOG(LogTemp, Warning, TEXT("GetStringMeshForPlayer %d"), PlayerSelection);
+		return ListaMeshForPlayer[(int)PlayerSelection];
+	}
+	
+	FORCEINLINE void SetPlayer(EPlayerTypeSelection Player) {
+		UE_LOG(LogTemp, Warning, TEXT("SetPlayer %d"), Player);
+		PlayerSelection = Player;
+	}
+
 
 	UPROPERTY(BlueprintAssignable)
 		FCadastroResultSuccessSignature OnCadastroReultSuccess;
@@ -127,4 +158,5 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE int RetrievePlayerTime() const { return PlayerTime; };
+
 };

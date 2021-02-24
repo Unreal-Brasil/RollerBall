@@ -31,6 +31,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
 		class UCameraComponent* Camera;
 
+
+	virtual void BeginPlay() override;
+
 private:
 	bool bIsPaused = false;
 
